@@ -1,6 +1,7 @@
 package condip;
 
 import condip.infraestructura.NotificadorCorreo;
+import condip.infraestructura.NotificadorSMS;
 import condip.infraestructura.NotificadorWhatsApp;
 import condip.infraestructura.RepositorioEnMemoria;
 import condip.infraestructura.RepositorioMySQL;
@@ -31,5 +32,10 @@ public class Main {
         ServicioPedidos servicio3 = new ServicioPedidos(new RepositorioMySQL(),
                 (destino, mensaje) -> System.out.println("[Consola] " + destino + ": " + mensaje));
         servicio3.procesarPedido(new Pedido("Bodega", "Tornillos", 100));
+
+        // Configuración 4: Memoria + SMS (ServicioPedidos tampoco cambió)
+        System.out.println("\n-- Configuracion 4: Memoria + SMS --");
+        ServicioPedidos servicio4 = new ServicioPedidos(new RepositorioEnMemoria(), new NotificadorSMS());
+        servicio4.procesarPedido(new Pedido("+57 311 000 0000", "Brocha", 4));
     }
 }
